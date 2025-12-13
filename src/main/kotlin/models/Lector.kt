@@ -21,7 +21,7 @@ class Lector (val nom: String) {
         }
     }
     fun llistarPrestecs() {
-        println("Bon dia $nom, els llibres que tens prestats actualment son: ")
+        println("Bon dia $nom, els llibres que actualment estan prestats son: ")
         llibresPrestats.forEach { llibre -> println("${llibre.titol} de autor ${llibre.autor}") }
     }
 }

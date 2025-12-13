@@ -45,6 +45,8 @@ fun main() {
     println()
     println()
 
+    val llibresEnProces = mutableListOf<String>()
+
     while (true) {
 
         println("============= Benvingut a la biblioteca d'Olesa! =============")
@@ -52,11 +54,11 @@ fun main() {
         println("======= 1 - Llistar llibres disponibles")
         println("======= 2 - Llistar autors disponibles")
         println("======= 3 - Cercar llibres per autor")
-        println("======= 4 - Por hacer")
-        println("======= 5 - Por hacer")
-        println("======= 6 - Por hacer")
-        println("======= 7 - Por hacer")
-        println("======= 8 - Por hacer")
+        println("======= 4 - Informació d'un llibre en concret")
+        println("======= 5 - Llistar els llibres que estan prestats actualment")
+        println("======= 6 - Llistar els usuaris disponibles")
+        println("======= 7 - Sugerir un llibre per agregar-lo a la biblioteca")
+        println("======= 8 - Por hacer (Iniciar sesion)")
         println("======= 9 - Conectarse a una altres biblioteca d'Espanya")
         print("======= Introdueix l'acció que desitjas fer: ")
         val input = readln()
@@ -93,8 +95,10 @@ fun main() {
 
                             when (readln()) {
                                 "1" -> {
-                                    println("Torna al menú i tornar a intentar-ho") // Mejorar esto
+                                    println("Carregant...")
                                     Thread.sleep(2000)
+                                    println("Hi ha hagut un error, torna a intentar-ho.")
+                                    Thread.sleep(3000)
                                     break
                                 }
                                 "2" -> break
@@ -108,14 +112,101 @@ fun main() {
                     }
                 }
             }
-            "4" -> { println("4"); continue }
-            "5" -> { println("5"); continue }
-            "6" -> {}
-            "7" -> {}
-            "8" -> {}
+            "4" -> {
+                println("Aquests son tots els llibres de la biblioteca: ")
+                while (true) {
+                    bibliotecaOlesa.llistarTotsElsLlibres()
+                    print("Introdueix el titol del llibre de cual vols obtenir informació (exemple: Caillou): ")
+                    val titolLlibres = readln()
+                    val llibreTrobat = catalogoOlesa.find { it.titol == titolLlibres }
+
+                    if (llibreTrobat != null) {
+                        println(llibreTrobat.info())
+                    } else {
+                        println("El titol del llibre introduit no existeix, torna a intentar-ho.")
+                        continue
+                    }
+                    println("Clica 1 per obtenir informació d'un altre llibre")
+                    println("Clica 2 per tornar al menu principal")
+                    print("Elecció: ")
+                    when (readln()) {
+                        "1" -> { continue }
+                        "2" -> {
+                            break
+                        }
+                        else -> println("No has introduit 1 o 2, torna a intentar-ho.")
+                    }
+                }
+            }
+            "5" -> {
+                println("Aquest son els llibres que en aquest moment estan prestats: ")
+                for (x in catalogoOlesa) {
+                    if (x.prestat) {
+                        println(x.titol)
+                    }
+                }
+                print("Clica enter per continuar: ")
+                readln()
+                continue
+            }
+            "6" -> {
+                println("Els usuaris (lectors) disponibles actualment son:")
+                lectoresOlesa.forEach { println(it.nom) }
+                print("Clica enter per continuar: ")
+                readln()
+                continue
+            }
+            "7" -> {
+                while (true) {
+                    println("Clica 1 per veure totes les sugerencias de nous llibres")
+                    println("Clica 2 per afegir un nou llibre")
+                    print("Elecció: ")
+                    when (readln()) {
+                        "1" -> {
+                            println("Els llibres suggests actualment son: ")
+                            for (x in llibresEnProces) {
+                                println(x)
+                            }
+                            print("Clica enter per continuar: ")
+                            readln()
+                            break
+                        }
+                        "2" -> {
+                            println("Escriu el nom del llibre que t'agradaría afegir: ")
+                            val nouLlibre = readln()
+
+                            println("Envian sugerencia, esperi...")
+                            llibresEnProces.add(nouLlibre)
+                            Thread.sleep(2000)
+                            println ("La teva sugerencia s'ha enviat correctament t'agradarià\nque s'agregues algun altre llibre?")
+                            while (true) {
+                                println("Clica 1 per agregar un nou llibre")
+                                println("Clica 2 per tornar al menù")
+                                print("Elecció: ")
+                                when (readln()) {
+                                    "1" -> {
+                                        println("Carregant...")
+                                        Thread.sleep(2000)
+                                        println("Error inesperat, torna a intentar-ho.")
+                                        Thread.sleep(3000)
+                                        break
+                                    }
+                                    "2" -> break
+                                    else -> { println("No has introduit 1 o 2, torna a intentar-ho"); continue }
+                                }
+                            }
+                        }
+                        else -> { println("No has introduit 1 o 2, torna a intentar-ho"); continue }
+                    }
+                }
+                continue
+            }
+            "8" -> {
+                continue
+            }
             "9" -> {
                 println("Buscant bibliotecas disponibles, si us plau, esperi...")
-                Thread.sleep(5000)
+                Thread.sleep(8000)
                 println("No hi han bibliotecas disponibles, torna a intentar-ho més tard.")
                 print("Clica enter per continuar: ")
                 readln()
@@ -127,9 +218,8 @@ fun main() {
                 readln()
                 continue
             }
-
         }
-
     }
     println("Gracies per visitar la biblioteca d'Olesa, esperem que tornis!!!")
+    Thread.sleep(2500)
 }

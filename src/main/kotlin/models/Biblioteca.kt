@@ -21,6 +21,13 @@ class Biblioteca (val cataleg: MutableList<Llibre>, val lectors: MutableList<Lec
         println("Els llibres actualment disponibles son: ")
         cataleg.forEach { llibre -> if (!llibre.prestat) println(llibre.titol)}
     }
+    fun llistarTotsElsLlibres() {
+        var contador = 0
+        for (llibres in cataleg) {
+            contador += 1
+            println("$contador - ${llibres.titol}")
+        }
+    }
     fun cercarPerAutor(autor: String): List<Llibre> {
 
         val llistaAutors = mutableListOf<Llibre>()
@@ -45,7 +52,7 @@ class Biblioteca (val cataleg: MutableList<Llibre>, val lectors: MutableList<Lec
             }
         }
         println("Si vols cercar per autor asegurat de que escrius exactament el nom de l'autor, si no")
-        println("el programa no funcionara (consell; copia i enganxa l'autor que vulguis cercar!!!)")
+        println("el programa no funcionara (consell, copia i enganxa l'autor que vulguis cercar!!!)")
         return autoresDisponibles
     }
     fun autorsDisponibles2(): List<String> {
