@@ -58,7 +58,6 @@ class Biblioteca (val cataleg: MutableList<Llibre>, val lectors: MutableList<Lec
     fun autorsDisponibles2(): List<String> {
         val autoresDisponibles = mutableListOf<String>()
 
-        println("Els autors disponibles son:")
         for (llibre in cataleg) {
             if (llibre.autor !in autoresDisponibles) {
                 autoresDisponibles.add(llibre.autor)

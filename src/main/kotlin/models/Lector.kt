@@ -15,7 +15,7 @@ class Lector (val nom: String) {
         if (llib.prestat) {
             llibresPrestats.remove(llib)
             llib.retornar()
-            println("El llibre s'ha retornar correctament.")
+            println("El llibre ${llib.titol} s'ha retornat correctament.")
         } else {
             println("El llibre no es pot retornar perqué no està prestat.")
         }
@@ -23,5 +23,8 @@ class Lector (val nom: String) {
     fun llistarPrestecs() {
         println("Bon dia $nom, els llibres que actualment estan prestats son: ")
         llibresPrestats.forEach { llibre -> println("${llibre.titol} de autor ${llibre.autor}") }
+        if (llibresPrestats.isEmpty()) {
+            println("Actualment no tens llibres prestats.")
+        }
     }
 }
